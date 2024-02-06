@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資料處理</title>
+    <style>
+        input {
+            background-color:brown;
+        }
+
+        strong {
+            color: white;
+            font-size: 170%;
+        }
+
+        main,
+        footer {
+            margin: 4%;
+        }
+
+        li.list-group-item {
+            background-color: transparent;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+</head>
+
+<body background="../images/bg.jpeg" style="text-align: center;color: aqua;">
+    <header>
+        <nav style="margin-top: 7%;">
+            <h1 style="font-weight: bold;">資料處理</h1>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <form action="/login" method="post" id="form" style="font-size: 123%;">
+                <ul class="list-group container">
+                    <li class="list-group-item">
+                        <input type="text" placeholder="帳號" name="text" id="text" size="10">
+                    </li>
+                    <li class="list-group-item"></li>
+                    <li class="list-group-item">
+                        <input type="password" placeholder="密碼" name="password" id="password" size="10"
+                            autocomplete="current-password">
+                    </li>
+                    <li class="list-group-item"></li>
+                    <li class="list-group-item"><input type="submit" value="登入"
+                            style="border-radius:40%;color: burlywood;font-weight: bold;"></li>
+                </ul>
+            </form>
+        </section>
+    </main>
+    <footer style="background-color: gray;">
+        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="2000">
+                    <strong>&copy; 畢業專題實作</strong>
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                    <strong>指導教授 : 夏傳儀</strong>
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                    <strong>指導學生 : 吳奉恩</strong>
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                    <strong>指導學生 : 丁寶傑</strong>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden"></span>
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById("form").addEventListener("submit", function (event) {    // 監聽登入功能
+            event.preventDefault();    // 仿止默認行為
+
+            var text = document.getElementById("text").value;
+            var password = document.getElementById("password").value;
+            if (text === "" || password === "") {
+                alert("帳號或密碼沒填");
+                return false;
+            }
+
+            var login = { username: text, password: password };
+            fetch("/login", {    // 傳資料給後端
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(login)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        sessionStorage.setItem("session", JSON.stringify(data.session));
+                        window.location.href = data.redirect;
+                        document.getElementById("text").value = '';
+                        document.getElementById("password").value = '';
+                    } else {
+                        alert(data.message);
+                        document.getElementById("text").value = '';
+                        document.getElementById("password").value = '';
+                    }
+                })
+                .catch(error => {
+                    console.error("404", error);
+                });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

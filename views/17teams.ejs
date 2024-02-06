@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>球隊</title>
+    <style>
+        h2 {
+            color: red;
+        }
+
+        strong {
+            color: burlywood;
+        }
+
+        input {
+            width: 99%;
+        }
+
+        b {
+            color: red;
+            font-size: 33px;
+        }
+
+        nav,
+        section {
+            margin: 4%;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+
+<body style="text-align: center;color: aqua;" background="images/bg.jpeg">
+    <header>
+        <nav>
+            <form action="/logout" method="get" id="logout">
+                <input type="submit" value="登出" style="width: 50px;height: 50px;border-radius: 40%;">
+            </form>
+        </nav>
+        <nav>
+            <h1 style="display: inline;font-weight: bold;">球隊</h1>
+        </nav>
+        <nav>
+            <div class="container">
+                <div class="row">
+                    <div class="col"><a href="/17">
+                            <h2>資料管理</h2>
+                        </a></div>
+                    <div class="col"><a href="/17teams">
+                            <h2>球隊</h2>
+                        </a></div>
+                    <div class="col"><a href="/17players">
+                            <h2>球員</h2>
+                        </a></div>
+                    <div class="col"><a href="/17games">
+                            <h2>比賽</h2>
+                        </a></div>
+                    <div class="col"><a href="/17sql">
+                            <h2>賽程</h2>
+                        </a></div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <b id="message">
+                <%= message; %>
+            </b>
+            <script>
+                var myElement = $('#message');
+                myElement.css('display', 'block');
+                setTimeout(function () {
+                    myElement.css('display', 'none');
+                }, 2000);
+            </script>
+        </section>
+        <section>
+            <table class="table">
+                <thead style="color: blue;">
+                    <tr>
+                        <th>新增</th>
+                        <th>更新</th>
+                        <th>刪除</th>
+                    </tr>
+                </thead>
+                <tbody style="color: yellow;">
+                    <form action="/teams" method="post" id="idp">
+                        <tr>
+                            <td><input type="submit" name="insert" value="新增" id="insertbox" style="border-radius:40%;">
+                            </td>
+                            <td><input type="submit" name="update" value="更新" id="updatebox" style="border-radius:40%;">
+                            </td>
+                            <td><input type="submit" name="cut" value="刪除" id="cutbox" style="border-radius:40%;"></td>
+                        </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <table class="table">
+                <thead style="color: blue;">
+                    <tr>
+                        <th>編號(球隊年份)(INT5)</th>
+                        <th>西元年份(INT5)</th>
+                        <th>球團隊名(VARCHAR20)</th>
+                        <th>比賽場次(INT5)</th>
+                        <th>勝場(INT5)</th>
+                        <th>和局(INT5)</th>
+                        <th>敗場(INT5)</th>
+                    </tr>
+                </thead>
+                <tbody style="color: yellow;">
+                    <tr>
+                        <td><input type="text" name="teamsid" id="teamsid"></td>
+                        <td><input type="text" name="year" id="year"></td>
+                        <td><input type="text" name="who" id="who"></td>
+                        <td><input type="text" name="total" id="total"></td>
+                        <td><input type="text" name="win" id="win"></td>
+                        <td><input type="text" name="draw" id="draw"></td>
+                        <td><input type="text" name="loss" id="loss"></td>
+                    </tr>
+                    </form>
+                    <% results.forEach(row=> { %>
+                        <tr>
+                            <td><input type="text" value="<%= row['teamsid'] %>"></td>
+                            <td><input type="text" value="<%= row['year'] %>"></td>
+                            <td><input type="text" value="<%= row['who'] %>"></td>
+                            <td><input type="text" value="<%= row['total'] %>"></td>
+                            <td><input type="text" value="<%= row['win'] %>"></td>
+                            <td><input type="text" value="<%= row['draw'] %>"></td>
+                            <td><input type="text" value="<%= row['loss'] %>"></td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById('idp').addEventListener('submit', function (event) {
+            var teamsid = document.getElementById('teamsid').value;
+            var year = document.getElementById('year').value;
+            var who = document.getElementById('who').value;
+            var total = document.getElementById('total').value;
+            var win = document.getElementById('win').value;
+            var draw = document.getElementById('draw').value;
+            var loss = document.getElementById('loss').value;
+
+            var clickedButton = event.submitter;
+
+            if (clickedButton.value === '新增') {
+                if (teamsid.trim() === '' || year.trim() === '' || who.trim() === '' || total.trim() === '' || win.trim() === '' || draw.trim() === '' || loss.trim() === '') {
+                    alert(' *所有欄位必須填寫* ');
+                    event.preventDefault();
+                }
+            } else if (clickedButton.value === '更新') {
+                if (teamsid.trim() === '' || year.trim() === '' || who.trim() === '' || total.trim() === '' || win.trim() === '' || draw.trim() === '' || loss.trim() === '') {
+                    alert(' *所有欄位必須填寫* ');
+                    event.preventDefault();
+                }
+            } else if (clickedButton.value === '刪除') {
+                if (teamsid.trim() === '') {
+                    alert(' *球隊編號(INT5)必須填寫* ');
+                    event.preventDefault();
+                }
+            }
+        });
+
+        document.getElementById('logout').addEventListener("submit", function (event) {    // LOGOUT路由
+            event.preventDefault();    // 仿止瀏覽器默認行為
+
+            fetch("/logout", {
+                method: "GET",
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = data.redirect;
+                    } else {
+                        alert("登出失敗");
+                    }
+                })
+                .catch(error => {
+                    console.error("404", error);
+                });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

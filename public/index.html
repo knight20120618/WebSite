@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中華職棒查詢網站</title>
+    <style>
+        b {
+            color: black;
+            font-size: 140%;
+        }
+
+        strong {
+            font-size: 170%;
+            color: white;
+        }
+
+        header,
+        section,
+        footer {
+            margin: 4%;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+
+<body background="images/bg.jpeg" style="text-align:center;">
+    <header class="alert alert-secondary" role="alert" style="display: flex;">
+        <span style="flex: 4;">
+            <h1 style="color: black;font-weight: bold;text-align: center;font-size: 40px;">中華職棒查詢網站</h1>
+            <b id="current_date" style="color:  rgb(247, 64, 64);"></b>
+        </span>
+        <script>
+            $("#current_date").html(new Date());
+        </script>
+        <span style="flex: 1;">
+            <i style="font-weight: bold;color: brown;">*關於我們*</i>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28971.101701290772!2d121.6855093!3d24.8164113!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3467ef436cd5f00b%3A0xa4f8e6ea38859e1a!2z5L2b5YWJ5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1698841086643!5m2!1szh-TW!2stw"
+                width="120" height="90" style="border:2px solid burlywood;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </span>
+    </header>
+    <main>
+        <section id="row">
+            <div class="row">
+                <div class="btn-group btn-group-lg" role="group" aria-label="Basic outlined example">
+                    <a href="/introduce" type="button" class="btn btn-outline-primary"
+                        style="width:10%;height:100%;border:2px rgb(252, 252, 252) none;"><b>球團介紹</b></a>
+                    <a href="/winner" type="button" class="btn btn-outline-primary"
+                        style="width:10%;height:100%;border:2px rgb(252, 252, 252) none;"><b>歷年戰績</b></a>
+                    <a href="/sql" type="button" class="btn btn-outline-primary"
+                        style="width:10%;height:100%;border:2px rgb(252, 252, 252) none;"><b>經典查詢</b></a>
+                    <a href="/champion" type="button" class="btn btn-outline-primary"
+                        style="width:10%;height:100%;border:2px rgb(252, 252, 252) none;"><b>預測分析</b></a>
+                </div>
+            </div>
+        </section>
+        <section>
+            <a href="17/enter.html" target="_blank">
+                <img src="images/cpbl.png" width="60%">
+            </a>
+        </section>
+    </main>
+    <footer style="background-color: gray;">
+        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="2000">
+                    <strong>&copy; 畢業專題實作</strong>
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                    <strong>指導教授 : 夏傳儀</strong>
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                    <strong>指導學生 : 吳奉恩</strong>
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                    <strong>指導學生 : 丁寶傑</strong>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden"></span>
+            </button>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>比賽</title>
+    <style>
+        h2 {
+            color: red;
+        }
+
+        strong {
+            color: burlywood;
+        }
+
+        input {
+            width: 99%;
+        }
+
+        b {
+            color: red;
+            font-size: 33px;
+        }
+
+        nav,
+        section {
+            margin: 4%;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+
+<body style="text-align: center;color: aqua;" background="images/bg.jpeg">
+    <header>
+        <nav>
+            <form action="/logout" method="get" id="logout">
+                <input type="submit" value="登出" style="width: 50px;height: 50px;border-radius: 40%;">
+            </form>
+        </nav>
+        <nav>
+            <h1 style="display: inline;font-weight: bold;">比賽</h1>
+        </nav>
+        <nav>
+            <div class="container">
+                <div class="row">
+                    <div class="col"><a href="/17">
+                            <h2>資料管理</h2>
+                        </a></div>
+                    <div class="col"><a href="/17teams">
+                            <h2>球隊</h2>
+                        </a></div>
+                    <div class="col"><a href="/17players">
+                            <h2>球員</h2>
+                        </a></div>
+                    <div class="col"><a href="/17games">
+                            <h2>比賽</h2>
+                        </a></div>
+                    <div class="col"><a href="/17sql">
+                            <h2>賽程</h2>
+                        </a></div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <b id="message">
+                <%= message; %>
+            </b>
+            <script>
+                var myElement = $('#message');
+                myElement.css('display', 'block');
+                setTimeout(function () {
+                    myElement.css('display', 'none');
+                }, 2000);
+            </script>
+        </section>
+        <section>
+            <table class="table">
+                <thead style="color: blue;">
+                    <tr>
+                        <th>新增</th>
+                        <th>更新</th>
+                        <th>刪除</th>
+                    </tr>
+                </thead>
+                <tbody style="color: yellow;">
+                    <form action="/games" method="post" id="ipd">
+                        <tr>
+                            <td><input type="submit" name="insert" id="insert01" value="新增" style="border-radius:40%;">
+                            </td>
+                            <td><input type="submit" name="update" id="update01" value="更新" style="border-radius:40%;">
+                            </td>
+                            <td><input type="submit" name="cut" id="cut01" value="刪除" style="border-radius:40%;"></td>
+                        </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <table class="table">
+                <thead style="color: blue;">
+                    <tr>
+                        <th>球員編號(INT5)</th>
+                        <th>出場次數(INT5)</th>
+                        <th>上壘率(VARCHAR5)</th>
+                        <th>長打率(VARCHAR5)</th>
+                        <th>打擊率(VARCHAR5)</th>
+                        <th>防禦率(VARCHAR5)</th>
+                        <th>投球局數(VARCHAR5)</th>
+                        <th>每局被上壘率(VARCHAR5)</th>
+                    </tr>
+                </thead>
+                <tbody style="color: yellow;">
+                    <tr>
+                        <td><input type="text" name="playerid" id="PLAYERID"></td>
+                        <td><input type="text" name="game" id="GAME"></td>
+                        <td><input type="text" name="hit" id="HIT"></td>
+                        <td><input type="text" name="slugging" id="SLUGGING"></td>
+                        <td><input type="text" name="batting" id="BATTING"></td>
+                        <td><input type="text" name="era" id="ERA"></td>
+                        <td><input type="text" name="bureau" id="BUREAU"></td>
+                        <td><input type="text" name="whip" id="WHIP"></td>
+                    </tr>
+                    </form>
+                    <% results.forEach(row=> { %>
+                        <tr>
+                            <td><input type="text" value="<%= row['playersid'] %>"></td>
+                            <td><input type="text" value="<%= row['game'] %>"></td>
+                            <td><input type="text" value="<%= row['hit'] %>"></td>
+                            <td><input type="text" value="<%= row['slugging'] %>"></td>
+                            <td><input type="text" value="<%= row['batting'] %>"></td>
+                            <td><input type="text" value="<%= row['era'] %>"></td>
+                            <td><input type="text" value="<%= row['bureau'] %>"></td>
+                            <td><input type="text" value="<%= row['whip'] %>"></td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById('ipd').addEventListener('submit', function (event) {
+            var PLAYERID = document.getElementById('PLAYERID').value;
+            var GAME = document.getElementById('GAME').value;
+            var HIT = document.getElementById('HIT').value;
+            var SLUGGING = document.getElementById('SLUGGING').value;
+            var BATTING = document.getElementById('BATTING').value;
+            var ERA = document.getElementById('ERA').value;
+            var BUREAU = document.getElementById('BUREAU').value;
+            var WHIP = document.getElementById('WHIP').value;
+
+            var clickedButton = event.submitter;
+
+            if (clickedButton.value === '新增') {
+                if (PLAYERID.trim() === '' || GAME.trim() === '' || HIT.trim() === '' || SLUGGING.trim() === '' || BATTING.trim() === '' || ERA.trim() === '' || BUREAU.trim() === '' || WHIP.trim() === '') {
+                    alert(' *所有欄位必須填寫* ');
+                    event.preventDefault();
+                }
+            } else if (clickedButton.value === '更新') {
+                if (PLAYERID.trim() === '' || GAME.trim() === '' || HIT.trim() === '' || SLUGGING.trim() === '' || BATTING.trim() === '' || ERA.trim() === '' || BUREAU.trim() === '' || WHIP.trim() === '') {
+                    alert(' *所有欄位必須填寫* ');
+                    event.preventDefault();
+                }
+            } else if (clickedButton.value === '刪除') {
+                if (PLAYERID.trim() === '') {
+                    alert(' *球員編號(INT5)必須填寫* ');
+                    event.preventDefault();
+                }
+            }
+        });
+
+        document.getElementById('logout').addEventListener("submit", function (event) {    // LOGOUT路由
+            event.preventDefault();    // 仿止瀏覽器默認行為
+
+            fetch("/logout", {
+                method: "GET",
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = data.redirect;
+                    } else {
+                        alert("登出失敗");
+                    }
+                })
+                .catch(error => {
+                    console.error("404", error);
+                });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

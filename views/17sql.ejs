@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>賽程</title>
+    <style>
+        h2 {
+            color: red;
+        }
+
+        strong {
+            color: burlywood;
+        }
+
+        input {
+            width: 99%;
+        }
+
+        b {
+            color: red;
+            font-size: 33px;
+        }
+
+        nav,
+        section {
+            margin: 4%;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+
+<body background="../images/bg.jpeg" style="text-align: center;color: aqua;">
+    <header>
+        <nav>
+            <form action="/logout" method="get" id="logout">
+                <input type="submit" value="登出" style="width: 50px;height: 50px;border-radius: 40%;">
+            </form>
+        </nav>
+        <nav>
+            <h1 style="display: inline;font-weight: bold;">賽程</h1>
+        </nav>
+        <nav>
+            <div class="container">
+                <div class="row">
+                    <div class="col"><a href="/17">
+                            <h2>資料管理</h2>
+                        </a></div>
+                    <div class="col"><a href="/17teams">
+                            <h2>球隊</h2>
+                        </a></div>
+                    <div class="col"><a href="/17players">
+                            <h2>球員</h2>
+                        </a></div>
+                    <div class="col"><a href="/17games">
+                            <h2>比賽</h2>
+                        </a></div>
+                    <div class="col"><a href="/17sql">
+                            <h2>賽程</h2>
+                        </a></div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <b id="message">
+                <%= message; %>
+            </b>
+            <script>
+                var myElement = $('#message');
+                myElement.css('display', 'block');
+                setTimeout(function () {
+                    myElement.css('display', 'none');
+                }, 2000);
+            </script>
+        </section>
+        <section>
+            <table class="table">
+                <thead style="color: blue;">
+                    <tr>
+                        <th>新增</th>
+                        <th>更新</th>
+                        <th>刪除</th>
+                    </tr>
+                </thead>
+                <tbody style="color: yellow;">
+                    <form action="/db" method="post" id="idp">
+                        <tr>
+                            <td><input type="submit" name="insert" value="新增" id="insertbox" style="border-radius:40%;">
+                            </td>
+                            <td><input type="submit" name="update" value="更新" id="updatebox" style="border-radius:40%;">
+                            </td>
+                            <td><input type="submit" name="cut" value="刪除" id="cutbox" style="border-radius:40%;"></td>
+                        </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <table class="table">
+                <thead style="color: blue;">
+                    <tr>
+                        <th>西元年份(INT5)</th>
+                        <th>冠軍球隊(VARCHAR20)</th>
+                        <th>亞軍球隊(VARCHAR20)</th>
+                        <th>G1(VARCHAR20)</th>
+                        <th>G2(VARCHAR20)</th>
+                        <th>G3(VARCHAR20)</th>
+                        <th>G4(VARCHAR20)</th>
+                        <th>G5(VARCHAR20)</th>
+                        <th>G6(VARCHAR20)</th>
+                        <th>G7(VARCHAR20)</th>
+                    </tr>
+                </thead>
+                <tbody style="color: yellow;">
+                    <tr>
+                        <td><input type="text" id="years" name="years"></td>
+                        <td><input type="text" id="noone" name="noone"></td>
+                        <td><input type="text" id="notwo" name="notwo"></td>
+                        <td><input type="text" id="gone" name="gone"></td>
+                        <td><input type="text" id="gtwo" name="gtwo"></td>
+                        <td><input type="text" id="gthree" name="gthree"></td>
+                        <td><input type="text" id="gfour" name="gfour"></td>
+                        <td><input type="text" id="gfive" name="gfive"></td>
+                        <td><input type="text" id="gsix" name="gsix"></td>
+                        <td><input type="text" id="gseven" name="gseven"></td>
+                    </tr>
+                    </form>
+                    <% results.forEach(row=> { %>
+                        <tr>
+                            <td><input type="text" value="<%= row['years']%>"></td>
+                            <td><input type="text" value="<%= row['noone']%>"></td>
+                            <td><input type="text" value="<%= row['notwo']%>"></td>
+                            <td><input type="text" value="<%= row['gone']%>"></td>
+                            <td><input type="text" value="<%= row['gtwo']%>"></td>
+                            <td><input type="text" value="<%= row['gthree']%>"></td>
+                            <td><input type="text" value="<%= row['gfour']%>"></td>
+                            <td><input type="text" value="<%= row['gfive']%>"></td>
+                            <td><input type="text" value="<%= row['gsix']%>"></td>
+                            <td><input type="text" value="<%= row['gseven']%>"></td>
+                        </tr>
+                        <% } ) ; %>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById('idp').addEventListener('submit', function (event) {
+            var years = document.getElementById('years').value;
+            var noone = document.getElementById('noone').value;
+            var notwo = document.getElementById('notwo').value;
+            var gone = document.getElementById('gone').value;
+            var gtwo = document.getElementById('gtwo').value;
+            var gthree = document.getElementById('gthree').value;
+            var gfour = document.getElementById('gfour').value;
+            var gfive = document.getElementById('gfive').value;
+            var gsix = document.getElementById('gsix').value;
+            var gseven = document.getElementById('gseven').value;
+
+            var clickedButton = event.submitter;
+
+            if (clickedButton.value === '新增') {
+                if (years.trim() === '' || noone.trim() === '' || notwo.trim() === '' || gone.trim() === '' || gtwo.trim() === '' || gthree.trim() === '' || gfour.trim() === '' || gfive.trim() === '' || gsix.trim() === '' || gseven.trim() === '') {
+                    alert(' *所有欄位必須填寫* ');
+                    event.preventDefault();
+                }
+            } else if (clickedButton.value === '更新') {
+                if (years.trim() === '' || noone.trim() === '' || notwo.trim() === '' || gone.trim() === '' || gtwo.trim() === '' || gthree.trim() === '' || gfour.trim() === '' || gfive.trim() === '' || gsix.trim() === '' || gseven.trim() === '') {
+                    alert(' *所有欄位必須填寫* ');
+                    event.preventDefault();
+                }
+            } else if (clickedButton.value === '刪除') {
+                if (years.trim() === '') {
+                    alert(' *西元年份(INT5)必須填寫* ');
+                    event.preventDefault();
+                }
+            }
+        });
+
+        document.getElementById('logout').addEventListener("submit", function (event) {    // LOGOUT路由
+            event.preventDefault();    // 仿止瀏覽器默認行為
+
+            fetch("/logout", {
+                method: "GET",
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = data.redirect;
+                    } else {
+                        alert("登出失敗");
+                    }
+                })
+                .catch(error => {
+                    console.error("404", error);
+                });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

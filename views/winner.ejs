@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歷年戰績</title>
+    <style>
+        b {
+            color: black;
+            font-size: 140%;
+        }
+
+        label {
+            color: blueviolet;
+            font-size: 170%;
+            font-weight: bold;
+        }
+
+        strong {
+            font-size: 140%;
+            color: rgb(70, 102, 206);
+        }
+
+        header,
+        section,
+        footer {
+            margin: 4%;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+
+<body background="images/bg.jpeg" style="text-align: center;color: aqua;">
+    <header class="alert alert-secondary" role="alert" style="display: flex;">
+        <span style="flex: 4;">
+            <h1 style="color: black;font-weight: bold;text-align: center;font-size: 40px;">歷年戰績</h1>
+            <b id="current_date" style="color:  rgb(247, 64, 64);"></b>
+        </span>
+        <script>
+            $("#current_date").html(new Date());
+        </script>
+        <span style="flex: 1;">
+            <i style="font-weight: bold;color: brown;">*關於我們*</i>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28971.101701290772!2d121.6855093!3d24.8164113!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3467ef436cd5f00b%3A0xa4f8e6ea38859e1a!2z5L2b5YWJ5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1698841086643!5m2!1szh-TW!2stw"
+                width="120" height="90" style="border:2px solid burlywood;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </span>
+    </header>
+    <main>
+        <section id="row">
+            <div class="row">
+                <div class="btn-group btn-group-lg" role="group" aria-label="Basic outlined example">
+                    <a href="/" type="button" class="btn btn-outline-primary"
+                        style="width:10%;height:100%;border:2px rgb(252, 252, 252) none;"><b>中華職棒查詢網站</b></a>
+                    <a href="/introduce" type="button" class="btn btn-outline-primary"
+                        style="width:10%;height:100%;border:2px rgb(252, 252, 252) none;"><b>球團介紹</b></a>
+                    <a href="/sql" type="button" class="btn btn-outline-primary"
+                        style="width:10%;height:100%;border:2px rgb(252, 252, 252) none;"><b>經典查詢</b></a>
+                    <a href="/champion" type="button" class="btn btn-outline-primary"
+                        style="width:10%;height:100%;border:2px rgb(252, 252, 252) none;"><b>預測分析</b></a>
+                </div>
+            </div>
+        </section>
+        <section>
+            <form action="/winner" method="get">
+                <br>
+                <input type="checkbox" name="" id="box0" style=" transform: scale(2);">
+                <label for="RESULT">球隊</label>
+                <input type="text" size="11" name="QUERY" id="RESULT">
+                <br><br>
+                <input type="checkbox" name="" id="box1" style=" transform: scale(2);">
+                <label for="result">年份</label>
+                <select name="query" id="result">
+                    <option value=""></option>
+                </select>
+                <br><br>
+                <input type="submit" value="查詢" style="border-radius:40%;" id="submit">
+            </form>
+        </section>
+        <section>
+            <p id="message" style="color: gray;font-weight: bold;">
+                <%= message; %>
+            </p>
+        </section>
+        <section>
+            <div class="row">
+                <div class="col">
+                    <h2 style="color: red;font-weight: bold;">選擇年份=></h2>
+                </div>
+                <div class="col">
+                    <h3 style="color: red;font-weight: bold;">
+                        <%= query; %>
+                    </h3>
+                </div>
+            </div>
+        </section>
+        <section>
+            <table class="table">
+                <thead style="color: blue;font-size: 123%;">
+                    <tr>
+                        <th>球隊</th>
+                        <th>場次</th>
+                        <th>勝</th>
+                        <th>和</th>
+                        <th>敗</th>
+                    </tr>
+                </thead>
+                <tbody style="color: blue;font-size: 123%;">
+                    <% if (results && results.length> 0) {
+                        results.forEach(result=> { %>
+                        <tr>
+                            <td>
+                                <%= result.who; %>
+                            </td>
+                            <td>
+                                <%= result.total; %>
+                            </td>
+                            <td>
+                                <%= result.win; %>
+                            </td>
+                            <td>
+                                <%= result.draw; %>
+                            </td>
+                            <td>
+                                <%= result.loss; %>
+                            </td>
+                        </tr>
+                        <% }) }; %>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col"><img src="/images/w.png" alt="" width="100px"></div>
+                <div class="col"><img src="/images/g.png" alt="" width="100px"></div>
+                <div class="col"><img src="/images/r.png" alt="" width="100px"></div>
+                <div class="col"><img src="/images/b.png" alt="" width="100px"></div>
+                <div class="col"><img src="/images/ul.png" alt="" width="100px"></div>
+                <div class="col"><img src="/images/h.jpg" alt="" width="100px"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            var box0 = document.getElementById('box0');
+            var RESULT = document.getElementById('RESULT');
+            RESULT.disabled = true;
+            var box1 = document.getElementById('box1');
+            var result = document.getElementById('result');
+            result.disabled = true;
+            var submit = document.getElementById('submit');
+            submit.disabled = true;
+
+            box0.addEventListener('change', () => {
+                if (box0.checked) {
+                    box1.disabled = true;
+                    RESULT.disabled = false;
+                    submit.disabled = false;
+                } else {
+                    box1.disabled = false;
+                    RESULT.disabled = true;
+                    submit.disabled = true;
+                }
+            });
+
+            box1.addEventListener('change', () => {
+                if (box1.checked) {
+                    box0.disabled = true;
+                    result.disabled = false;
+                    submit.disabled = false;
+                } else {
+                    box0.disabled = false;
+                    result.disabled = true;
+                    submit.disabled = true;
+                }
+            });
+
+            var resultElement = document.getElementById('result');
+            fetch('/winnerform')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('404');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    data.results.forEach(result => {
+                        var optionElement = document.createElement('option');
+                        optionElement.textContent = 4012 - result.year;
+                        optionElement.value = 4012 - result.year;
+                        resultElement.appendChild(optionElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('發生錯誤', error);
+                    var optionElement = document.createElement('option');
+                    optionElement.textContent = '查詢失敗';
+                    optionElement.value = '';
+                    resultElement.appendChild(optionElement);
+                });
+        });
+
+        var myElement = $("#message");
+        myElement.css("display", "block");
+        myElement.delay(2000).fadeOut();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
